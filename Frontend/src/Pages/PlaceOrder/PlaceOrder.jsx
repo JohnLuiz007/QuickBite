@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 const PlaceOrder = () => {
 
-  const { getTotalCartAmount, token, food_list, cartItem, URl } = useContext(StoreContext)
+  const { getTotalCartAmount, token, food_list, cartItem, URl, setCartItems } = useContext(StoreContext)
 
   const [data, setData] = useState({
     firstName: "",
@@ -20,7 +20,6 @@ const PlaceOrder = () => {
     country: "",
     phone: ""
   })
-
 
   const onChangeHandler = (event) => {
     const name = event.target.name
@@ -46,8 +45,8 @@ const PlaceOrder = () => {
     }
     let response = await axios.post(URl+"/api/order/place", orderData,{headers:{token}})
     if(response.data.success){
-      const { session_url } = response.data;
-      window.location.replace(session_url)
+      setCartItems({})
+      navigate('/myorders')
     } else {
       console.log(response.data.message)
       alert("Error")
