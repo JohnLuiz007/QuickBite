@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 
-  const URl = import.meta.env.VITE_API_URL || "http://localhost:4000"
+  const URl = (import.meta.env.VITE_API_URL || "http://localhost:4000").replace(/\/+$/, "")
 
 
   return (
