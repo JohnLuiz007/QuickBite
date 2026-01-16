@@ -1,0 +1,72 @@
+.page{
+  padding: 18px 0 40px;
+}
+
+.title{
+  font-size: 22px;
+  margin: 6px 0 14px;
+}
+
+.form{
+  border: 1px solid #008e46;
+  border-radius: 12px;
+  padding: 14px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 520px;
+}
+
+.row{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label{
+  font-weight: 600;
+}
+
+.input{
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #c9c9c9;
+  outline: none;
+}
+
+.textarea{
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #c9c9c9;
+  outline: none;
+  resize: vertical;
+}
+
+.grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.preview{
+  width: 160px;
+  border-radius: 10px;
+  border: 1px solid #e8e8e8;
+}
+
+.button{
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #008e46;
+  color: #fff;
+  cursor: pointer;
+  width: 120px;
+}
+
+@media (max-width: 520px){
+  .grid{
+    grid-template-columns: 1fr;
+  }
+}

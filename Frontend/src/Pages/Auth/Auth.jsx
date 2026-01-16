@@ -32,7 +32,7 @@ const Auth = () => {
       return;
     }
 
-    const redirectTo = "/menu";
+    const redirectTo = userRole === "staff" ? "/staff/orders" : "/menu";
 
     const endpoint = mode === "login" ? "/api/user/login" : "/api/user/register";
     const response = await axios.post(URl + endpoint, data);

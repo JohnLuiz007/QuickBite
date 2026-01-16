@@ -6,13 +6,13 @@ import { StoreContext } from '../../context/StoreContext'
 const FoodItem = ({id,name,price,description,image}) => {
 
     const {cartItem,addToCart,removeFromCart,URl} = useContext(StoreContext)
-
+    const userRole = localStorage.getItem('userRole') || 'student'
 
   return (
     <div className={style.FoodItem}>
         <div className={style.FoodItemImageContainer}>
             <img className={style.FoodItemImage} src={URl+"/images/"+image} alt="" />
-            {
+            {userRole === 'staff' ? null : (
                 !cartItem[id]
                 ?<img className={style.add} onClick={()=>addToCart(id)} src={assets.add_icon_white} alt="" />
                 :<div className={style.FoodItemCount}>
@@ -20,7 +20,7 @@ const FoodItem = ({id,name,price,description,image}) => {
                     <p>{cartItem[id]}</p>
                     <img src={assets.add_icon_green} onClick={()=>addToCart(id)}  alt="" />
                 </div>
-            }
+            )}
         </div>
         <div className={style.FoodItemInfo}>
             <div className={style.FoodItemName}> 

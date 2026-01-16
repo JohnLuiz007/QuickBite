@@ -54,8 +54,12 @@ const StoreContextProvider = (props) => {
     async function loaddata () {
       await fetchFoodList()
       if(localStorage.getItem("token")){
-        setToken(localStorage.getItem("token"))
-        await loadcartData(localStorage.getItem("token"));
+        const savedToken = localStorage.getItem("token")
+        setToken(savedToken)
+        const userRole = localStorage.getItem('userRole') || 'student'
+        if (userRole !== 'staff') {
+          await loadcartData(savedToken);
+        }
       }
     }
     loaddata()
