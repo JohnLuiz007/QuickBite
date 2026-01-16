@@ -4,7 +4,7 @@ import styles from "./staffAddFood.module.css";
 import { StoreContext } from "../../context/StoreContext";
 
 const StaffAddFood = () => {
-  const { URl, token } = useContext(StoreContext);
+  const { URl, token, fetchFoodList } = useContext(StoreContext);
 
   const [image, setImage] = useState(null);
   const [data, setData] = useState({
@@ -33,14 +33,23 @@ const StaffAddFood = () => {
     formData.append("category", data.category);
     formData.append("image", image);
 
-    const response = await axios.post(`${URl}/api/food/add`, formData, { headers: { token } });
-    if (response.data.success) {
-      setData({ name: "", description: "", price: "", category: "Salad" });
-      setImage(null);
-      alert("Food Added");
-      return;
+    try {
+      const response = await axios.post(`${URl}/api/food/add`, formData, { headers: { token } });
+      if (response.data.success) {
+        setData({ name: "", description: "", price: "", category: "Salad" });
+        setImage(null);
+        await fetchFoodList?.();
+        alert(response.data.message || "Food Added");
+        return;
+      }
+      alert(response.data.message || "Error");
+    } catch (error) {
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Add food failed";
+      alert(message);
     }
-    alert(response.data.message || "Error");
   };
 
   return (

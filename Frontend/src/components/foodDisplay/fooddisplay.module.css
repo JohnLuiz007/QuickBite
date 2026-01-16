@@ -5,7 +5,7 @@
 .FoodDisplay h2{
     font-size: max(2vw,24px);
     font-weight: 600;
-    color: #fff;
+    color: #111;
 }
 
 .FoodDisplayList{
