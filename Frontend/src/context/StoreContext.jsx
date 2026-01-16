@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useMemo, useState } from "react";
 export const StoreContext = createContext(null);
 import axios from "axios";
 
@@ -41,10 +41,10 @@ const StoreContextProvider = (props) => {
     return totalAmount;
   };
 
-  const fetchFoodList = async ()=>{
-    const response = await axios.get(URl+"/api/food/list")
-    setFoodList(response.data.data)
-  }
+  const fetchFoodList = useCallback(async () => {
+    const response = await axios.get(URl + "/api/food/list");
+    setFoodList(response.data.data);
+  }, [URl]);
 
   const loadcartData = async (token) => {
     const response = await axios.post(URl+"/api/cart/get",{}, {headers: {token}})
@@ -65,9 +65,9 @@ const StoreContextProvider = (props) => {
       }
     }
     loaddata()
-  },[])
+  },[fetchFoodList])
 
-  const contextValue = {
+  const contextValue = useMemo(() => ({
     food_list,
     fetchFoodList,
     cartItem,
@@ -78,7 +78,13 @@ const StoreContextProvider = (props) => {
     URl,
     token,
     setToken
-  };
+  }), [
+    food_list,
+    fetchFoodList,
+    cartItem,
+    URl,
+    token
+  ]);
 
 
 
