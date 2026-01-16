@@ -1,31 +1,50 @@
-import { useState } from 'react'
+import { useContext } from 'react'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar/Navbar'
-import { Route, Routes } from 'react-router-dom'
+import Footer from './components/Footer/Footer'
+import Auth from './Pages/Auth/Auth'
+import RoleSelect from './Pages/RoleSelect/RoleSelect'
 import Home from './Pages/Home/Home'
 import Cart from './Pages/Cart/Cart'
-import PlaceOrder from './Pages/PlaceOrder/PlaceOrder'
-import Footer from './components/Footer/Footer'
-import LoginPopUp from './components/Login/LoginPopUp'
-import Verify from './Pages/Verify/Verify'
 import MyOrders from './Pages/Orders/MyOrders'
-
+import { StoreContext } from './context/StoreContext'
 
 const App = () => {
-  const [showLogin,setShowLogin] = useState(false)
+  const { token } = useContext(StoreContext)
+  const location = useLocation()
+  const isPublicRoute = location.pathname === '/' || location.pathname === '/auth'
+
+  const RequireAuth = ({ children }) => {
+    if (!token) return <Navigate to="/" replace />
+    return children
+  }
+
+  const RequireRole = ({ role, children }) => {
+    const userRole = localStorage.getItem('userRole')
+    if (!userRole) return <Navigate to="/" replace />
+    if (role && userRole !== role) return <Navigate to="/menu" replace />
+    return children
+  }
+
+  const RedirectIfAuthed = ({ children }) => {
+    if (token) return <Navigate to="/menu" replace />
+    return children
+  }
+
   return (
     <>
-      {showLogin ? <LoginPopUp setShowLogin={setShowLogin} /> : <></>}
       <div className="app">
-        <Navbar setShowLogin={setShowLogin} />
+        {isPublicRoute ? null : <Navbar />}
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/placeorder" element={<PlaceOrder />} />
-          <Route path='/verify' element={<Verify />} />
-          <Route path="/myorders" element={<MyOrders />} />
+          <Route path="/" element={<RedirectIfAuthed><RoleSelect /></RedirectIfAuthed>} />
+          <Route path="/auth" element={<RedirectIfAuthed><Auth /></RedirectIfAuthed>} />
+          <Route path="/menu" element={<RequireAuth><RequireRole role="student"><Home /></RequireRole></RequireAuth>} />
+          <Route path="/cart" element={<RequireAuth><RequireRole role="student"><Cart /></RequireRole></RequireAuth>} />
+          <Route path="/orders" element={<RequireAuth><RequireRole role="student"><MyOrders /></RequireRole></RequireAuth>} />
+          <Route path="*" element={<Navigate to={token ? '/menu' : '/'} replace />} />
         </Routes>
       </div>
-      <Footer />
+      {isPublicRoute ? null : <Footer />}
     </>
   );
 }

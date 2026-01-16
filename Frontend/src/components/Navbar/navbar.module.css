@@ -7,6 +7,7 @@
 
 .Navbar .logo{
     width: 250px;
+    filter: brightness(0) saturate(100%) invert(33%) sepia(92%) saturate(1287%) hue-rotate(95deg) brightness(92%) contrast(102%);
 }
 
 .navbarMenu{
@@ -14,7 +15,40 @@
     list-style: none;
     gap: 20px;
     font-size: 15px;
-    color:#eded05;
+    color:#008e46;
+}
+
+.tabBar{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+    background-color: #fff;
+    border: 1px solid #008e46;
+    border-radius: 999px;
+    padding: 6px;
+}
+
+.tab{
+    position: relative;
+    width: 100%;
+    padding: 10px 24px;
+    border-radius: 999px;
+    color: #008e46;
+    font-size: 14px;
+    line-height: 1;
+    display: inline-flex;
+    gap: 0px;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.tabActive{
+    background-color: #008e46;
+    color: #fff;
 }
 
 .navbarRight{
@@ -24,10 +58,10 @@
 }
 
 .Navbar button{
-    background: transparent;
+    background: #008e46;
     font-size: 15px;
-    color: #eded05;
-    border: 1px solid #eded05;
+    color: #fff;
+    border: none;
     padding: 10px 30px;
     border-radius: 50px;
     cursor: pointer;
@@ -35,7 +69,7 @@
 }
 
 .Navbar button:hover{
-    background-color: #49557e;
+    background-color: #008e46;
     color: white;
 }
 
@@ -56,7 +90,7 @@
     position: absolute;
     min-width: 10px;
     min-height: 10px;
-    background-color: #eded05;
+    background-color: #008e46;
     border-radius: 5px;
     top: -8px;
     right: -8px;
@@ -81,7 +115,7 @@
     background-color: #fff2ef;
     padding: 12px 25px;
     border-radius: 4px;
-    border: 1px solid tomato;
+    border: 1px solid #008e46;
     outline: 2px solid white;
     list-style: none;
 }
@@ -98,7 +132,7 @@
 }
 
 .navProfileDropdown li:hover{
-    color: tomato;
+    color: #008e46;
 }
 
 @media (max-width:1050px){
@@ -124,9 +158,9 @@
     .Navbar .logo{
         width: 120px;
     }
-    .navbarMenu{
-        gap: 15px;
-        font-size: 16px;
+    .tab{
+        padding: 9px 14px;
+        font-size: 13px;
     }
     .navbarRight{
         gap: 20px;
@@ -141,7 +175,30 @@
 }
 
 @media (max-width:750px){
-    .navbarMenu{
-       display: none;
+    .Navbar{
+        gap: 12px;
+    }
+    .Navbar .logo{
+        width: 110px;
+    }
+    .tabBar{
+        padding: 5px;
+    }
+    .tab{
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    .navbarRight{
+        gap: 10px;
+    }
+    .Navbar button{
+        padding: 8px 14px;
+    }
+}
+
+@media (max-width:420px){
+    .tab{
+        padding: 8px 8px;
+        font-size: 12px;
     }
 }

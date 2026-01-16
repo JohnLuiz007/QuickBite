@@ -1,0 +1,88 @@
+.AuthPage{
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  width: 80%;
+  margin: auto;
+  align-items: center;
+  color: #111;
+}
+
+.BrandPanel{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.Logo{
+  width: 220px;
+  filter: brightness(0) saturate(100%) invert(33%) sepia(92%) saturate(1287%) hue-rotate(95deg) brightness(92%) contrast(102%);
+}
+
+.Headline{
+  font-size: 38px;
+  line-height: 1.1;
+}
+
+.Subtitle{
+  color: #555;
+  max-width: 520px;
+}
+
+.FormPanel{
+  display: flex;
+  justify-content: center;
+}
+
+.Form{
+  width: min(420px, 100%);
+  background-color: white;
+  border: 1px solid #008e46;
+  border-radius: 10px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.Title{
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.Input{
+  outline: none;
+  border: 1px solid #c9c9c9;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.PrimaryButton{
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  color: white;
+  background-color: #008e46;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.SwitchText{
+  color: #555;
+  font-size: 14px;
+}
+
+.SwitchLink{
+  color: #008e46;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+@media (max-width: 900px){
+  .AuthPage{
+    grid-template-columns: 1fr;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}

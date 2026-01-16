@@ -1,0 +1,44 @@
+.row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.qtyInput{
+  width: 160px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #c9c9c9;
+  outline: none;
+}
+
+.actions{
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.primary{
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  color: white;
+  background-color: #008e46;
+  cursor: pointer;
+}
+
+.secondary{
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  color: white;
+  background: #008e46;
+  cursor: pointer;
+}
+
+.receiptSpacer{
+  margin-top: 10px;
+}
