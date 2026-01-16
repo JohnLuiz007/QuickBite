@@ -8,10 +8,22 @@ const FoodItem = ({id,name,price,description,image}) => {
     const {cartItem,addToCart,removeFromCart,URl} = useContext(StoreContext)
     const userRole = localStorage.getItem('userRole') || 'student'
 
+    const imageSrc = (typeof image === 'string' && (image.startsWith('http') || image.startsWith('/')))
+      ? image
+      : (URl + "/images/" + image)
+
   return (
     <div className={style.FoodItem}>
         <div className={style.FoodItemImageContainer}>
-            <img className={style.FoodItemImage} src={URl+"/images/"+image} alt="" />
+            <img
+              className={style.FoodItemImage}
+              src={imageSrc}
+              alt=""
+              onError={(e) => {
+                e.currentTarget.onerror = null
+                e.currentTarget.src = assets.food_placeholder
+              }}
+            />
             {userRole === 'staff' ? null : (
                 !cartItem[id]
                 ?<img className={style.add} onClick={()=>addToCart(id)} src={assets.add_icon_white} alt="" />

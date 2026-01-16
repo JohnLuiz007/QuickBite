@@ -66,6 +66,7 @@ export const assets = {
     header_img,
     search_icon,
     rating_starts,
+    food_placeholder: food_1,
     add_icon_green,
     add_icon_white,
     remove_icon_red,

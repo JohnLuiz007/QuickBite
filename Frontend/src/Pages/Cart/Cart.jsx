@@ -1,6 +1,7 @@
-import React, { useContext, useMemo, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import style from "./cart.module.css";
 import { StoreContext } from "../../context/StoreContext";
+import { assets } from "../../assets/assets";
 import { useNavigate } from 'react-router-dom';
 import Modal from "../../components/Modal/Modal";
 import modalStyles from "../../components/Modal/modalContent.module.css";
@@ -165,12 +166,22 @@ const Cart = () => {
         <hr />
         {food_list.map((item, index) => {
           if (cartItem[item._id] > 0) {
+            const imageSrc = (typeof item.image === 'string' && (item.image.startsWith('http') || item.image.startsWith('/')))
+              ? item.image
+              : (URl + "/images/" + item.image)
             return (
               <div>
                 <div
                   className={`${style.CartItemsTitle} ${style.CartItemsItem}`}
                 >
-                  <img src={URl+"/images/"+item.image} alt="" />
+                  <img
+                    src={imageSrc}
+                    alt=""
+                    onError={(e) => {
+                      e.currentTarget.onerror = null
+                      e.currentTarget.src = assets.food_placeholder
+                    }}
+                  />
                   <p>{item.name}</p>
                   <p>₱{item.price}</p>
                   <p>{cartItem[item._id]}</p>

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import styles from "./staffAddFood.module.css";
 import { StoreContext } from "../../context/StoreContext";
+import { assets } from "../../assets/assets";
 
 const StaffAddFood = () => {
   const { URl, token, fetchFoodList, food_list } = useContext(StoreContext);
@@ -132,7 +133,17 @@ const StaffAddFood = () => {
       <div className={styles.menuList}>
         {sortedFoods.map((food) => (
           <div key={food._id} className={styles.menuRow}>
-            <img className={styles.thumb} src={`${URl}/images/${food.image}`} alt="" />
+            <img
+              className={styles.thumb}
+              src={(typeof food.image === 'string' && (food.image.startsWith('http') || food.image.startsWith('/')))
+                ? food.image
+                : `${URl}/images/${food.image}`}
+              alt=""
+              onError={(e) => {
+                e.currentTarget.onerror = null
+                e.currentTarget.src = assets.food_placeholder
+              }}
+            />
             <div className={styles.menuMeta}>
               <div className={styles.menuName}>{food.name}</div>
               <div className={styles.menuSub}>₱{food.price} · {food.category}</div>
