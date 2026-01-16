@@ -1,6 +1,6 @@
 .Cart{
     margin-top: 100px;
-    color : #fff;
+    color : #111;
 }
 
 .CartItemsTitle{
@@ -13,7 +13,7 @@
 
 .CartItemsItem {    
     margin: 10px 0px;
-    color: #fff;
+    color: #111;
 }
 
 .CartItemsItem img{
@@ -42,13 +42,13 @@
     display: flex;
     flex-direction: column;
     gap: 20px; 
-    color: #fff;
+    color: #111;
 }
 
 .CartTotalDetails{
     display: flex;
     justify-content: space-between;
-    color: #fff;
+    color: #111;
 }
 
 .CartTotal hr{
@@ -65,45 +65,8 @@
     cursor: pointer;
 }
 
-.CartPromoCode{
-    flex: 1;
-}
-
-.CartPromoCode p{
-    color: #555;
-}
-
-.CartPromoCodeInput{
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #eaeaea;
-    border-radius: 4px;
-}
-
-.CartPromoCodeInput input{
-    background: transparent;
-    border: none;
-    outline: none;
-    padding-left: 10px;
-}
-
-.CartPromoCodeInput button{
-    width: max(10vw,150px);
-    padding: 12px 5px;
-    background-color: black;
-    border: none;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
 @media (max-width:750px){
     .CartBottom{
         flex-direction: column-reverse;
-    }
-    .CartPromoCode{
-        justify-content: start;
     }
 }

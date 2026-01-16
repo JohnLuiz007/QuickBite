@@ -220,15 +220,6 @@ const Cart = () => {
           </div>
           <button onClick={openReceiptPreview}>Checkout</button>
         </div>
-        <div className={style.CartPromoCode}>
-          <div>
-            <p>If you have promo code then add here</p>
-            <div className={style.CartPromoCodeInput}>
-              <input type="text" placeholder="Promocode" />
-              <button>Submit</button>
-            </div>
-          </div>
-        </div>
       </div>
 
       <Modal open={isReceiptOpen} title="Receipt preview" onClose={() => setIsReceiptOpen(false)}>
