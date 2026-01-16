@@ -48,7 +48,7 @@ const StaffOrders = () => {
               <img className={styles.icon} src={assets.parcel_icon} alt="" />
               <div className={styles.meta}>
                 <div className={styles.orderId}>Order: {String(order._id).slice(-6)}</div>
-                <div className={styles.amount}>${order.amount}</div>
+                <div className={styles.amount}>₱{order.amount}</div>
               </div>
               <select className={styles.select} onChange={(e) => statusHandler(e, order._id)} value={order.status}>
                 <option value="Food is Getting Ready!">Food is Getting Ready!</option>

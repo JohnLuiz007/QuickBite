@@ -75,14 +75,14 @@ const Receipt = forwardRef(function Receipt(
       const qty = Number(it.quantity || 0);
       const priceStr = money(it.lineTotal ?? (Number(it.price || 0) * qty));
       const left = qty > 1 ? `${name} x${qty}` : name;
-      itemLines.push(padRight(left, maxName) + padLeft(`$${priceStr}`, width - maxName));
+      itemLines.push(padRight(left, maxName) + padLeft(`₱${priceStr}`, width - maxName));
     });
 
     const totals = [];
     totals.push("");
-    totals.push(padRight("SUBTOTAL:", 20) + padLeft(`$${money(subtotal)}`, width - 20));
-    totals.push(padRight("DELIVERY:", 20) + padLeft(`$${money(tax)}`, width - 20));
-    totals.push(padRight("TOTAL:", 20) + padLeft(`$${money(total)}`, width - 20));
+    totals.push(padRight("SUBTOTAL:", 20) + padLeft(`₱${money(subtotal)}`, width - 20));
+    totals.push(padRight("DELIVERY:", 20) + padLeft(`₱${money(tax)}`, width - 20));
+    totals.push(padRight("TOTAL:", 20) + padLeft(`₱${money(total)}`, width - 20));
 
     const footer = [];
     footer.push("");

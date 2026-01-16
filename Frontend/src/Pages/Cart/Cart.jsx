@@ -172,9 +172,9 @@ const Cart = () => {
                 >
                   <img src={URl+"/images/"+item.image} alt="" />
                   <p>{item.name}</p>
-                  <p>${item.price}</p>
+                  <p>₱{item.price}</p>
                   <p>{cartItem[item._id]}</p>
-                  <p>${item.price * cartItem[item._id]}</p>
+                  <p>₱{item.price * cartItem[item._id]}</p>
                   <p
                     className={style.Cross}
                     onClick={() => removeFromCart(item._id)}
@@ -194,17 +194,17 @@ const Cart = () => {
           <div>
             <div className={style.CartTotalDetails}>
               <p>Subtotal</p>
-              <p>${getTotalCartAmount()}</p>
+              <p>₱{getTotalCartAmount()}</p>
             </div>
             <hr />
             <div className={style.CartTotalDetails}>
               <p>Delivery Fee</p>
-              <p>${getTotalCartAmount()===0?0:5}</p> 
+              <p>₱{getTotalCartAmount()===0?0:5}</p> 
             </div> 
             <hr />
             <div className={style.CartTotalDetails}>
               <b>Total</b>
-              <b>${getTotalCartAmount()===0?0:getTotalCartAmount()+5}</b>
+              <b>₱{getTotalCartAmount()===0?0:getTotalCartAmount()+5}</b>
             </div>
           </div>
           <button onClick={openReceiptPreview}>Checkout</button>

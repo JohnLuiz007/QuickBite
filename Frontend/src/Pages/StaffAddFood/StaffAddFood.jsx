@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import styles from "./staffAddFood.module.css";
 import { StoreContext } from "../../context/StoreContext";
 
 const StaffAddFood = () => {
-  const { URl, token, fetchFoodList } = useContext(StoreContext);
+  const { URl, token, fetchFoodList, food_list } = useContext(StoreContext);
 
   const [image, setImage] = useState(null);
   const [data, setData] = useState({
@@ -14,10 +14,39 @@ const StaffAddFood = () => {
     category: "Salad",
   });
 
+  const sortedFoods = useMemo(() => {
+    return [...(food_list || [])].sort((a, b) => String(a?.name || "").localeCompare(String(b?.name || "")))
+  }, [food_list])
+
+  useEffect(() => {
+    fetchFoodList?.()
+  }, [fetchFoodList])
+
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
+
+  const onDeleteFood = async (id) => {
+    const ok = window.confirm("Delete this food item?")
+    if (!ok) return
+
+    try {
+      const response = await axios.post(`${URl}/api/food/remove`, { id }, { headers: { token } })
+      if (response.data.success) {
+        await fetchFoodList?.()
+        alert(response.data.message || "Food removed")
+        return
+      }
+      alert(response.data.message || "Delete failed")
+    } catch (error) {
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Delete failed"
+      alert(message)
+    }
+  }
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -98,6 +127,22 @@ const StaffAddFood = () => {
           Add
         </button>
       </form>
+
+      <h2 className={styles.title}>Current Menu</h2>
+      <div className={styles.menuList}>
+        {sortedFoods.map((food) => (
+          <div key={food._id} className={styles.menuRow}>
+            <img className={styles.thumb} src={`${URl}/images/${food.image}`} alt="" />
+            <div className={styles.menuMeta}>
+              <div className={styles.menuName}>{food.name}</div>
+              <div className={styles.menuSub}>₱{food.price} · {food.category}</div>
+            </div>
+            <button className={styles.deleteBtn} type="button" onClick={() => onDeleteFood(food._id)}>
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
