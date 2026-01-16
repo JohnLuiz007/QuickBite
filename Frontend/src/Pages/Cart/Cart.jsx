@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useMemo, useRef, useState } from "react";
 import style from "./cart.module.css";
 import { StoreContext } from "../../context/StoreContext";
 import { assets } from "../../assets/assets";
