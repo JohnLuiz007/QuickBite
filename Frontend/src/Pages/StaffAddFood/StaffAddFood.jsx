@@ -133,17 +133,29 @@ const StaffAddFood = () => {
       <div className={styles.menuList}>
         {sortedFoods.map((food) => (
           <div key={food._id} className={styles.menuRow}>
-            <img
-              className={styles.thumb}
-              src={(typeof food.image === 'string' && (food.image.startsWith('http') || food.image.startsWith('/')))
-                ? food.image
-                : `${URl}/images/${food.image}`}
-              alt=""
-              onError={(e) => {
-                e.currentTarget.onerror = null
-                e.currentTarget.src = assets.food_placeholder
-              }}
-            />
+            {(() => {
+              const placeholders = assets.food_placeholders || [assets.food_placeholder]
+              const seed = String(food._id ?? food.name ?? "")
+              const idx = Math.abs(seed.split("").reduce((acc, ch) => acc + ch.charCodeAt(0), 0)) % placeholders.length
+              const fallbackSrc = placeholders[idx] || assets.food_placeholder
+              const imageSrc = (!food.image)
+                ? fallbackSrc
+                : ((typeof food.image === 'string' && (food.image.startsWith('http') || food.image.startsWith('/')))
+                  ? food.image
+                  : `${URl}/images/${food.image}`)
+
+              return (
+                <img
+                  className={styles.thumb}
+                  src={imageSrc}
+                  alt=""
+                  onError={(e) => {
+                    e.currentTarget.onerror = null
+                    e.currentTarget.src = fallbackSrc
+                  }}
+                />
+              )
+            })()}
             <div className={styles.menuMeta}>
               <div className={styles.menuName}>{food.name}</div>
               <div className={styles.menuSub}>₱{food.price} · {food.category}</div>

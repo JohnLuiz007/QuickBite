@@ -166,9 +166,16 @@ const Cart = () => {
         <hr />
         {food_list.map((item, index) => {
           if (cartItem[item._id] > 0) {
-            const imageSrc = (typeof item.image === 'string' && (item.image.startsWith('http') || item.image.startsWith('/')))
-              ? item.image
-              : (URl + "/images/" + item.image)
+            const placeholders = assets.food_placeholders || [assets.food_placeholder]
+            const seed = String(item._id ?? item.name ?? "")
+            const idx = Math.abs(seed.split("").reduce((acc, ch) => acc + ch.charCodeAt(0), 0)) % placeholders.length
+            const fallbackSrc = placeholders[idx] || assets.food_placeholder
+
+            const imageSrc = (!item.image)
+              ? fallbackSrc
+              : ((typeof item.image === 'string' && (item.image.startsWith('http') || item.image.startsWith('/')))
+                ? item.image
+                : (URl + "/images/" + item.image))
             return (
               <div>
                 <div
@@ -179,7 +186,7 @@ const Cart = () => {
                     alt=""
                     onError={(e) => {
                       e.currentTarget.onerror = null
-                      e.currentTarget.src = assets.food_placeholder
+                      e.currentTarget.src = fallbackSrc
                     }}
                   />
                   <p>{item.name}</p>

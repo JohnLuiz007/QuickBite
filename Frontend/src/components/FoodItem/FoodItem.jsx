@@ -8,9 +8,16 @@ const FoodItem = ({id,name,price,description,image}) => {
     const {cartItem,addToCart,removeFromCart,URl} = useContext(StoreContext)
     const userRole = localStorage.getItem('userRole') || 'student'
 
-    const imageSrc = (typeof image === 'string' && (image.startsWith('http') || image.startsWith('/')))
-      ? image
-      : (URl + "/images/" + image)
+    const placeholders = assets.food_placeholders || [assets.food_placeholder]
+    const seed = String(id ?? name ?? "")
+    const idx = Math.abs(seed.split("").reduce((acc, ch) => acc + ch.charCodeAt(0), 0)) % placeholders.length
+    const fallbackSrc = placeholders[idx] || assets.food_placeholder
+
+    const imageSrc = (!image)
+      ? fallbackSrc
+      : ((typeof image === 'string' && (image.startsWith('http') || image.startsWith('/')))
+        ? image
+        : (URl + "/images/" + image))
 
   return (
     <div className={style.FoodItem}>
@@ -21,7 +28,7 @@ const FoodItem = ({id,name,price,description,image}) => {
               alt=""
               onError={(e) => {
                 e.currentTarget.onerror = null
-                e.currentTarget.src = assets.food_placeholder
+                e.currentTarget.src = fallbackSrc
               }}
             />
             {userRole === 'staff' ? null : (
