@@ -54,9 +54,13 @@ const FoodItem = ({ id, name, price, image }) => {
               <button
                 className={style.addButton}
                 type="button"
-                onClick={() => {
-                  addToCart(id)
-                  setShowOk(true)
+                onClick={async () => {
+                  try {
+                    await addToCart(id)
+                    setShowOk(true)
+                  } catch (err) {
+                    console.error('Failed to add to cart', err)
+                  }
                 }}
               >
                 Add
