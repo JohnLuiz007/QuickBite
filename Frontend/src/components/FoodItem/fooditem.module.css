@@ -62,7 +62,7 @@
 }
 
 .FoodItemPrice{
-    color: #eded05;
+    color: #fff;
     font-size: 22px;
     font-weight: 500;
     margin: 0;
@@ -83,8 +83,8 @@
 
 .addButton{
     border: none;
-    background: #eded05;
-    color: #111;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
     padding: 10px 14px;
     border-radius: 10px;
     font-weight: 600;
@@ -106,8 +106,8 @@
 
 .qtyBtn{
     border: none;
-    background: #eded05;
-    color: #111;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
     width: 34px;
     height: 34px;
     border-radius: 10px;
