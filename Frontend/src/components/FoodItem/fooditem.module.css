@@ -59,16 +59,14 @@
 }
 
 .addButton{
-    position: absolute;
-    bottom: 15px;
-    left: 15px;
     border: none;
     background: #008e46;
     color: #fff;
-    padding: 8px 12px;
-    border-radius: 999px;
+    padding: 10px 14px;
+    border-radius: 10px;
     font-weight: 600;
     cursor: pointer;
+    width: 120px;
 }
 
 .addButton:hover{
@@ -76,17 +74,19 @@
 }
 
 .FoodItemCount{
-    position: absolute;
-    bottom: 15px;
-    left: 15px;
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 6px;
-    border-radius: 50px;
-    background-color: white;
+    margin-top: 10px;
 }
 
-.FoodItemCount img{
-    width: 30px;
+.qtyBtn{
+    border: none;
+    background: #008e46;
+    color: #fff;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
 }

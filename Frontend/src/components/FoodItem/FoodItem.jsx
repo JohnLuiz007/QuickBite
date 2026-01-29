@@ -31,15 +31,6 @@ const FoodItem = ({ id, name, price, description, image }) => {
             e.currentTarget.src = fallbackSrc
           }}
         />
-        {userRole === 'staff' ? null : (
-          !cartItem[id]
-            ? <button className={style.addButton} type="button" onClick={() => addToCart(id)}>Add</button>
-            : <div className={style.FoodItemCount}>
-              <img src={assets.remove_icon_red} onClick={() => removeFromCart(id)} alt="" />
-              <p>{cartItem[id]}</p>
-              <img src={assets.add_icon_green} onClick={() => addToCart(id)} alt="" />
-            </div>
-        )}
       </div>
       <div className={style.FoodItemInfo}>
         <div className={style.FoodItemName}>
@@ -50,6 +41,16 @@ const FoodItem = ({ id, name, price, description, image }) => {
           {description}
         </p>
         <p className={style.FoodItemPrice}>₱{price}</p>
+
+        {userRole === 'staff' ? null : (
+          !cartItem[id]
+            ? <button className={style.addButton} type="button" onClick={() => addToCart(id)}>Add</button>
+            : <div className={style.FoodItemCount}>
+              <button className={style.qtyBtn} type="button" onClick={() => removeFromCart(id)}>-</button>
+              <p>{cartItem[id]}</p>
+              <button className={style.qtyBtn} type="button" onClick={() => addToCart(id)}>+</button>
+            </div>
+        )}
       </div>
     </div>
   )
