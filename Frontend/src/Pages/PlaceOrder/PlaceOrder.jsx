@@ -46,7 +46,8 @@ const PlaceOrder = () => {
     let response = await axios.post(URl+"/api/order/place", orderData,{headers:{token}})
     if(response.data.success){
       setCartItems({})
-      navigate('/myorders')
+      const orderId = response.data.orderId
+      navigate(orderId ? `/orders?orderId=${orderId}` : '/orders')
     } else {
       console.log(response.data.message)
       alert("Error")

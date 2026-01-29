@@ -145,7 +145,8 @@ const Cart = () => {
     if (response.data.success) {
       setCartItems({})
       setIsReceiptOpen(false)
-      navigate('/orders')
+      const orderId = response.data.orderId
+      navigate(orderId ? `/orders?orderId=${orderId}` : '/orders')
       return
     }
     alert("Checkout failed")

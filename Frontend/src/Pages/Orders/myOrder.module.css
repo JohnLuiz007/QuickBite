@@ -43,6 +43,117 @@
     color: black;
 }
 
+.detailsCard{
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid #eded05;
+    border-radius: 10px;
+    padding: 18px;
+    max-width: 900px;
+}
+
+.detailsHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(237, 237, 5, 0.35);
+}
+
+.detailsHeaderLeft{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.detailsIcon{
+    width: 46px;
+    height: 46px;
+}
+
+.detailsId{
+    margin: 0;
+    font-weight: 700;
+    color: white;
+}
+
+.detailsDate{
+    margin: 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.detailsStatus span{
+    color: #eded05;
+}
+
+.detailsStatus b{
+    font-weight: 700;
+    color: white;
+}
+
+.detailsSection{
+    margin-top: 16px;
+}
+
+.detailsSectionTitle{
+    margin: 0 0 10px 0;
+    font-weight: 800;
+    color: #eded05;
+}
+
+.detailsItems{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.detailsItemRow{
+    display: grid;
+    grid-template-columns: 2fr 0.8fr 1fr;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.18);
+}
+
+.detailsItemRow p{
+    margin: 0;
+    color: white;
+}
+
+.detailsItemQty,
+.detailsItemPrice{
+    text-align: right;
+}
+
+.detailsSummaryRow{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+}
+
+.detailsSummaryRow p{
+    margin: 0;
+}
+
+.detailsAmount{
+    color: #eded05;
+    font-weight: 900;
+}
+
+.detailsAddressLine{
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.4;
+}
+
+.detailsNotFound{
+    margin-top: 12px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
 @media (max-width: 900px) {
     .myordersOrder{
         grid-template-columns: 1fr 2fr 1fr;
