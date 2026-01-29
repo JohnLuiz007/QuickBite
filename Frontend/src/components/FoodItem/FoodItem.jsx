@@ -3,7 +3,7 @@ import style from './fooditem.module.css'
 import { assets } from '../../assets/assets'
 import { StoreContext } from '../../context/StoreContext'
 
-const FoodItem = ({ id, name, price, image }) => {
+const FoodItem = ({ id, name, price, description, image }) => {
 
   const { addToCart, URl } = useContext(StoreContext)
   const userRole = localStorage.getItem('userRole') || 'student'
@@ -34,39 +34,41 @@ const FoodItem = ({ id, name, price, image }) => {
         />
       </div>
       <div className={style.FoodItemInfo}>
-        <div className={style.FoodItemName}>
-          <p>{name}</p>
-        </div>
-        <p className={style.FoodItemPrice}>₱{price}</p>
+        <h3 className={style.FoodItemTitle}>{name}</h3>
+        <p className={style.FoodItemDescription}>{description}</p>
 
-        {userRole === 'staff' ? null : (
-          showOk
-            ? (
-              <button
-                className={style.okBtn}
-                type="button"
-                onClick={() => setShowOk(false)}
-              >
-                Ok
-              </button>
-            )
-            : (
-              <button
-                className={style.addButton}
-                type="button"
-                onClick={async () => {
-                  try {
-                    await addToCart(id)
-                    setShowOk(true)
-                  } catch (err) {
-                    console.error('Failed to add to cart', err)
-                  }
-                }}
-              >
-                Add
-              </button>
-            )
-        )}
+        <div className={style.FoodItemFooter}>
+          <p className={style.FoodItemPrice}>₱{price}</p>
+
+          {userRole === 'staff' ? null : (
+            showOk
+              ? (
+                <button
+                  className={style.okBtn}
+                  type="button"
+                  onClick={() => setShowOk(false)}
+                >
+                  Ok
+                </button>
+              )
+              : (
+                <button
+                  className={style.addButton}
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      await addToCart(id)
+                      setShowOk(true)
+                    } catch (err) {
+                      console.error('Failed to add to cart', err)
+                    }
+                  }}
+                >
+                  Add
+                </button>
+              )
+          )}
+        </div>
       </div>
     </div>
   )
