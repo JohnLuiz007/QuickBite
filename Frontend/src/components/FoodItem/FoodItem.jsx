@@ -3,10 +3,11 @@ import style from './fooditem.module.css'
 import { assets } from '../../assets/assets'
 import { StoreContext } from '../../context/StoreContext'
 
-const FoodItem = ({ id, name, price, description, image }) => {
+const FoodItem = ({ id, name, price, image }) => {
 
-  const { cartItem, addToCart, removeFromCart, URl } = useContext(StoreContext)
+  const { addToCart, URl } = useContext(StoreContext)
   const userRole = localStorage.getItem('userRole') || 'student'
+  const [showOk, setShowOk] = useState(false)
 
   const placeholders = assets.food_placeholders || [assets.food_placeholder]
   const seed = String(id ?? name ?? "")
@@ -35,21 +36,32 @@ const FoodItem = ({ id, name, price, description, image }) => {
       <div className={style.FoodItemInfo}>
         <div className={style.FoodItemName}>
           <p>{name}</p>
-          <img src={assets.rating_starts} alt="" />
         </div>
-        <p className={style.FoodItemDescription}>
-          {description}
-        </p>
         <p className={style.FoodItemPrice}>₱{price}</p>
 
         {userRole === 'staff' ? null : (
-          !cartItem[id]
-            ? <button className={style.addButton} type="button" onClick={() => addToCart(id)}>Add</button>
-            : <div className={style.FoodItemCount}>
-              <button className={style.qtyBtn} type="button" onClick={() => removeFromCart(id)}>-</button>
-              <p>{cartItem[id]}</p>
-              <button className={style.qtyBtn} type="button" onClick={() => addToCart(id)}>+</button>
-            </div>
+          showOk
+            ? (
+              <button
+                className={style.okBtn}
+                type="button"
+                onClick={() => setShowOk(false)}
+              >
+                Ok
+              </button>
+            )
+            : (
+              <button
+                className={style.addButton}
+                type="button"
+                onClick={() => {
+                  addToCart(id)
+                  setShowOk(true)
+                }}
+              >
+                Add
+              </button>
+            )
         )}
       </div>
     </div>
