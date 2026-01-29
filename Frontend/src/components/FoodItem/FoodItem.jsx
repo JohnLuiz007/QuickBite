@@ -33,7 +33,7 @@ const FoodItem = ({ id, name, price, description, image }) => {
         />
         {userRole === 'staff' ? null : (
           !cartItem[id]
-            ? <img className={style.add} onClick={() => addToCart(id)} src={assets.add_icon_white} alt="" />
+            ? <button className={style.addButton} type="button" onClick={() => addToCart(id)}>Add</button>
             : <div className={style.FoodItemCount}>
               <img src={assets.remove_icon_red} onClick={() => removeFromCart(id)} alt="" />
               <p>{cartItem[id]}</p>

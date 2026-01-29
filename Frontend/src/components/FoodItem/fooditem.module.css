@@ -58,6 +58,23 @@
     border-radius: 50%;    
 }
 
+.addButton{
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    border: none;
+    background: #008e46;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.addButton:hover{
+    filter: brightness(0.95);
+}
+
 .FoodItemCount{
     position: absolute;
     bottom: 15px;
