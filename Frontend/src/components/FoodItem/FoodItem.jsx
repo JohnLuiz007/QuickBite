@@ -9,7 +9,7 @@ const FoodItem = ({ id, name, price, description, image }) => {
   const userRole = localStorage.getItem('userRole') || 'student'
   const [showOk, setShowOk] = useState(false)
   const [isQtyModalOpen, setIsQtyModalOpen] = useState(false)
-  const [qtyValue, setQtyValue] = useState('1')
+  const [qtyValue, setQtyValue] = useState(1)
 
   const placeholders = assets.food_placeholders || [assets.food_placeholder]
   const seed = String(id ?? name ?? "")
@@ -58,7 +58,7 @@ const FoodItem = ({ id, name, price, description, image }) => {
                   className={style.addButton}
                   type="button"
                   onClick={() => {
-                    setQtyValue('1')
+                    setQtyValue(1)
                     setIsQtyModalOpen(true)
                   }}
                 >
@@ -78,12 +78,30 @@ const FoodItem = ({ id, name, price, description, image }) => {
         >
           <div className={style.modal} onClick={(e) => e.stopPropagation()}>
             <h4 className={style.modalTitle}>How many?</h4>
+            <div className={style.qtyRow}>
+              <button
+                className={style.qtyStepBtn}
+                type="button"
+                onClick={() => setQtyValue((prev) => Math.max(1, (Number(prev) || 1) - 1))}
+              >
+                -
+              </button>
+              <div className={style.qtyValue}>{Number(qtyValue) || 1}</div>
+              <button
+                className={style.qtyStepBtn}
+                type="button"
+                onClick={() => setQtyValue((prev) => (Number(prev) || 1) + 1)}
+              >
+                +
+              </button>
+            </div>
+
             <input
               className={style.qtyInput}
               type="number"
               min="1"
-              value={qtyValue}
-              onChange={(e) => setQtyValue(e.target.value)}
+              value={Number(qtyValue) || 1}
+              onChange={(e) => setQtyValue(Math.max(1, Math.floor(Number(e.target.value) || 1)))}
             />
             <div className={style.modalActions}>
               <button
