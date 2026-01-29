@@ -8,6 +8,8 @@ const FoodItem = ({ id, name, price, description, image }) => {
   const { addToCart, URl } = useContext(StoreContext)
   const userRole = localStorage.getItem('userRole') || 'student'
   const [showOk, setShowOk] = useState(false)
+  const [isQtyModalOpen, setIsQtyModalOpen] = useState(false)
+  const [qtyValue, setQtyValue] = useState('1')
 
   const placeholders = assets.food_placeholders || [assets.food_placeholder]
   const seed = String(id ?? name ?? "")
@@ -55,13 +57,9 @@ const FoodItem = ({ id, name, price, description, image }) => {
                 <button
                   className={style.addButton}
                   type="button"
-                  onClick={async () => {
-                    try {
-                      await addToCart(id)
-                      setShowOk(true)
-                    } catch (err) {
-                      console.error('Failed to add to cart', err)
-                    }
+                  onClick={() => {
+                    setQtyValue('1')
+                    setIsQtyModalOpen(true)
                   }}
                 >
                   Add
@@ -70,6 +68,51 @@ const FoodItem = ({ id, name, price, description, image }) => {
           )}
         </div>
       </div>
+
+      {isQtyModalOpen ? (
+        <div
+          className={style.modalOverlay}
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setIsQtyModalOpen(false)}
+        >
+          <div className={style.modal} onClick={(e) => e.stopPropagation()}>
+            <h4 className={style.modalTitle}>How many?</h4>
+            <input
+              className={style.qtyInput}
+              type="number"
+              min="1"
+              value={qtyValue}
+              onChange={(e) => setQtyValue(e.target.value)}
+            />
+            <div className={style.modalActions}>
+              <button
+                className={style.cancelBtn}
+                type="button"
+                onClick={() => setIsQtyModalOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className={style.confirmBtn}
+                type="button"
+                onClick={async () => {
+                  const qtyNum = Math.max(1, Math.floor(Number(qtyValue) || 1))
+                  try {
+                    await addToCart(id, qtyNum)
+                    setIsQtyModalOpen(false)
+                    setShowOk(true)
+                  } catch (err) {
+                    console.error('Failed to add to cart', err)
+                  }
+                }}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 }

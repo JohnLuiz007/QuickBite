@@ -10,15 +10,17 @@ const StoreContextProvider = (props) => {
   const [token , setToken] = useState("")
   const [food_list,setFoodList] = useState([])
 
-  const addToCart =  async (itemId) => {
-    if (!cartItem[itemId]) {
-      setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
-    } else {
-      setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    }
+  const addToCart =  async (itemId, quantity = 1) => {
+    const qty = Number.isFinite(Number(quantity)) ? Number(quantity) : 1
+    const qtyToAdd = Math.max(1, Math.floor(qty))
+
+    setCartItems((prev) => ({
+      ...prev,
+      [itemId]: (prev[itemId] || 0) + qtyToAdd
+    }));
 
     if (token) {
-      await axios.post(URl+"/api/cart/add", {itemId}, {headers: {token}})
+      await axios.post(URl+"/api/cart/add", {itemId, quantity: qtyToAdd}, {headers: {token}})
     }
 
   };

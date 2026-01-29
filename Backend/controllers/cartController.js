@@ -6,10 +6,12 @@ const addToCart = async (req, res) => {
     try {
         let userData = await userModel.findById(req.body.userId)
         let cartData = await userData.cartData;
+        const quantity = Number.isFinite(Number(req.body.quantity)) ? Number(req.body.quantity) : 1
+        const qtyToAdd = Math.max(1, Math.floor(quantity))
         if (!cartData[req.body.itemId]) {
-            cartData[req.body.itemId] = 1
+            cartData[req.body.itemId] = qtyToAdd
         } else {
-            cartData[req.body.itemId] += 1
+            cartData[req.body.itemId] += qtyToAdd
         }
 
         await userModel.findByIdAndUpdate(req.body.userId, { cartData })
