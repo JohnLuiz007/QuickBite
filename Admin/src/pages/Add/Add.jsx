@@ -51,6 +51,7 @@ const Add = ({URl}) => {
           <label htmlFor="image">
             <img src={image?URL.createObjectURL(image):assets.upload_area} alt="" />
           </label>
+          {image ? <p>{image.name}</p> : null}
           <input onChange={(e)=>setImage(e.target.files[0])} type="file" id="image" hidden required/>
         </div>
         <div className="add-product-name flex-col">
@@ -64,7 +65,7 @@ const Add = ({URl}) => {
         <div className="add-category-price">
           <div className="add-category flex-col">
             <p>Product Category</p>
-            <select  onChange={onChangeHandler} name='category'>
+            <select onChange={onChangeHandler} name='category' value={data.category}>
               <option value="Salad">Salad</option>
               <option value="Rolls">Rolls</option>
               <option value="Dessert">Dessert</option>

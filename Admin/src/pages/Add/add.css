@@ -20,10 +20,26 @@
 
 .add-product-name input,.add-product-desc textarea{
     padding: 10px;
+    color: #111;
+    caret-color: #111;
+    background: #fff;
+    border: 1px solid #c9c9c9;
+    border-radius: 8px;
+}
+
+.add-product-name input::placeholder,
+.add-product-desc textarea::placeholder{
+    color: #6d6d6d;
 }
 
 .add-category select,option{
     color: black;
+}
+
+.add-category select{
+    background: #fff;
+    border: 1px solid #c9c9c9;
+    border-radius: 8px;
 }
 
 .add-category-price{
@@ -34,6 +50,16 @@
 .add-category-price select, .add-category-price input{
     max-width: 120px;
     padding: 10px;
+    color: #111;
+    caret-color: #111;
+    background: #fff;
+    border: 1px solid #c9c9c9;
+    border-radius: 8px;
+}
+
+.add-image-upload label{
+    width: fit-content;
+    cursor: pointer;
 }
 
 .add-btn{
