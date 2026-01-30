@@ -21,7 +21,8 @@ const StaffAddFood = () => {
 
   useEffect(() => {
     fetchFoodList?.()
-  }, [fetchFoodList])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
