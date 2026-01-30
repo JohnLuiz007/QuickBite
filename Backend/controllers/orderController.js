@@ -68,4 +68,28 @@ const updateStatus = async (req, res) => {
     }
 }
 
-export { placeOrder, verifyOrder, userOrders, updateStatus, listOrders }
+const removeOrder = async (req, res) => {
+    try {
+        const orderId = req.body.orderId
+        if (!orderId) {
+            return res.json({ success: false, message: "Missing orderId" })
+        }
+
+        const order = await orderModel.findById(orderId)
+        if (!order) {
+            return res.json({ success: false, message: "Order not found" })
+        }
+
+        if (String(order.status) !== "Completed") {
+            return res.json({ success: false, message: "Only completed (picked up) orders can be removed" })
+        }
+
+        await orderModel.findByIdAndDelete(orderId)
+        return res.json({ success: true, message: "Order removed" })
+    } catch (error) {
+        console.log(error)
+        return res.json({ success: false, message: "Error" })
+    }
+}
+
+export { placeOrder, verifyOrder, userOrders, updateStatus, listOrders, removeOrder }

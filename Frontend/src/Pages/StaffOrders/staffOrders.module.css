@@ -84,6 +84,12 @@
   align-items: center;
 }
 
+.footerActions{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
 .status{
   color: #555;
 }
@@ -91,6 +97,15 @@
 .refresh{
   border: none;
   background: #008e46;
+  color: #fff;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.removeBtn{
+  border: none;
+  background: #d22;
   color: #fff;
   padding: 8px 10px;
   border-radius: 8px;

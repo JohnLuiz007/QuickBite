@@ -34,6 +34,28 @@ const StaffOrders = () => {
     alert("Failed to update status");
   };
 
+  const removeOrderHandler = async (orderId) => {
+    const ok = window.confirm("Remove this completed order? This cannot be undone.")
+    if (!ok) return
+
+    try {
+      const response = await axios.post(
+        URl + "/api/order/remove",
+        { orderId },
+        { headers: { token } }
+      )
+
+      if (response.data.success) {
+        await fetchAllOrders()
+        return
+      }
+      alert(response.data.message || "Failed to remove order")
+    } catch (error) {
+      const message = error?.response?.data?.message || error?.message || "Failed to remove order"
+      alert(message)
+    }
+  }
+
   useEffect(() => {
     fetchAllOrders();
   }, []);
@@ -68,9 +90,20 @@ const StaffOrders = () => {
 
             <div className={styles.footer}>
               <div className={styles.status}>Status: {order.status}</div>
-              <button className={styles.refresh} type="button" onClick={fetchAllOrders}>
-                Refresh
-              </button>
+              <div className={styles.footerActions}>
+                {String(order.status) === "Completed" ? (
+                  <button
+                    className={styles.removeBtn}
+                    type="button"
+                    onClick={() => removeOrderHandler(order._id)}
+                  >
+                    Remove
+                  </button>
+                ) : null}
+                <button className={styles.refresh} type="button" onClick={fetchAllOrders}>
+                  Refresh
+                </button>
+              </div>
             </div>
           </div>
         ))}

@@ -81,7 +81,6 @@ const Receipt = forwardRef(function Receipt(
     const totals = [];
     totals.push("");
     totals.push(padRight("SUBTOTAL:", 20) + padLeft(`₱${money(subtotal)}`, width - 20));
-    totals.push(padRight("DELIVERY:", 20) + padLeft(`₱${money(tax)}`, width - 20));
     totals.push(padRight("TOTAL:", 20) + padLeft(`₱${money(total)}`, width - 20));
 
     const footer = [];

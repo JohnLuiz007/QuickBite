@@ -14,6 +14,27 @@
     width: 120px;
 }
 
+.add-file-input{
+    padding: 10px;
+    color: #111;
+    caret-color: #111;
+    background: #fff;
+    border: 1px solid #c9c9c9;
+    border-radius: 8px;
+    max-width: 320px;
+}
+
+.add-file-name{
+    color: #111;
+}
+
+.add-preview{
+    width: 160px;
+    border-radius: 10px;
+    border: 1px solid #e8e8e8;
+    background: #fff;
+}
+
 .add-product-name,.add-product-desc{
     width:max(40%,280px);
 }

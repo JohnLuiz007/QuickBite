@@ -54,8 +54,8 @@ const Cart = () => {
 
   const receiptTotals = useMemo(() => {
     const subtotal = receiptItems.reduce((acc, it) => acc + it.lineTotal, 0)
-    const deliveryFee = subtotal === 0 ? 0 : 5
-    const total = subtotal + deliveryFee
+    const deliveryFee = 0
+    const total = subtotal
     return { subtotal, deliveryFee, total }
   }, [receiptItems])
 
@@ -67,7 +67,7 @@ const Cart = () => {
       pickupTime,
       items: receiptItems,
       subtotal: receiptTotals.subtotal,
-      tax: receiptTotals.deliveryFee,
+      tax: 0,
       total: receiptTotals.total,
     }
   }, [receiptItems, receiptTotals, pickupTime])
@@ -217,13 +217,8 @@ const Cart = () => {
             </div>
             <hr />
             <div className={style.CartTotalDetails}>
-              <p>Delivery Fee</p>
-              <p>₱{getTotalCartAmount()===0?0:5}</p> 
-            </div> 
-            <hr />
-            <div className={style.CartTotalDetails}>
               <b>Total</b>
-              <b>₱{getTotalCartAmount()===0?0:getTotalCartAmount()+5}</b>
+              <b>₱{getTotalCartAmount()}</b>
             </div>
           </div>
           <button onClick={openReceiptPreview}>Checkout</button>
