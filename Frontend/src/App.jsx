@@ -11,34 +11,36 @@ import StaffOrders from './Pages/StaffOrders/StaffOrders'
 import StaffAddFood from './Pages/StaffAddFood/StaffAddFood'
 import { StoreContext } from './context/StoreContext'
 
+const RequireAuth = ({ children }) => {
+  const { token } = useContext(StoreContext)
+  if (!token) return <Navigate to="/" replace />
+  return children
+}
+
+const RequireRole = ({ role, children }) => {
+  const userRole = localStorage.getItem('userRole')
+  if (!userRole) return <Navigate to="/" replace />
+  if (role && userRole !== role) {
+    const homePath = userRole === 'staff' ? '/staff/orders' : '/menu'
+    return <Navigate to={homePath} replace />
+  }
+  return children
+}
+
+const RedirectIfAuthed = ({ children }) => {
+  const { token } = useContext(StoreContext)
+  if (token) {
+    const userRole = localStorage.getItem('userRole')
+    const homePath = userRole === 'staff' ? '/staff/orders' : '/menu'
+    return <Navigate to={homePath} replace />
+  }
+  return children
+}
+
 const App = () => {
   const { token } = useContext(StoreContext)
   const location = useLocation()
   const isPublicRoute = location.pathname === '/' || location.pathname === '/auth'
-
-  const RequireAuth = ({ children }) => {
-    if (!token) return <Navigate to="/" replace />
-    return children
-  }
-
-  const RequireRole = ({ role, children }) => {
-    const userRole = localStorage.getItem('userRole')
-    if (!userRole) return <Navigate to="/" replace />
-    if (role && userRole !== role) {
-      const homePath = userRole === 'staff' ? '/staff/orders' : '/menu'
-      return <Navigate to={homePath} replace />
-    }
-    return children
-  }
-
-  const RedirectIfAuthed = ({ children }) => {
-    if (token) {
-      const userRole = localStorage.getItem('userRole')
-      const homePath = userRole === 'staff' ? '/staff/orders' : '/menu'
-      return <Navigate to={homePath} replace />
-    }
-    return children
-  }
 
   return (
     <>
