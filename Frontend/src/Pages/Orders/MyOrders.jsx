@@ -36,6 +36,7 @@ const MyOrders = () => {
         {orderId ? (
             selectedOrder ? (
                 <>
+                    <button className={styles.backBtn} onClick={() => navigate('/orders')}>← Back to Orders</button>
                     <h2>Order Details</h2>
                     <div className={styles.detailsCard}>
                         <div className={styles.detailsHeader}>
@@ -101,19 +102,24 @@ const MyOrders = () => {
                 <div className={styles.container}>
                     {data.map((order, index)=>{
                         return(
-                            <div  key={index} className={styles.myordersOrder}>
-                                <img src={assets.parcel_icon} alt="" />
-                                <p>{order.items.map((item, index)=>{
-                                    if (index === order.items.length - 1) {
-                                        return item.name+" x " + item.quantity
-                                    } else {
-                                        return item.name+" x " + item.quantity + ","
-                                    }
-                                })}</p>
-                                <p>₱{order.amount}.00</p>
-                                <p>Items: {order.items.length}</p>
-                                <p><span>&#x25cf;</span> <b>{order.status}</b> </p>
-                                <button onClick={() => navigate(`/orders?orderId=${order._id}`)}>Track Order</button>
+                            <div key={index} className={styles.myordersOrder}>
+                                <div className={styles.orderHeader}>
+                                    <img src={assets.parcel_icon} alt="" />
+                                    <div className={styles.orderMeta}>
+                                        <p className={styles.orderId}>Order #{String(order._id).slice(-6)}</p>
+                                        <p className={styles.orderDate}>{order.date ? new Date(order.date).toLocaleDateString() : ''}</p>
+                                    </div>
+                                </div>
+                                <p className={styles.orderItems}>
+                                    {order.items.map((item, idx) => (
+                                        <span key={idx}>{item.name} x {item.quantity}{idx < order.items.length - 1 ? ', ' : ''}</span>
+                                    ))}
+                                </p>
+                                <div className={styles.orderFooter}>
+                                    <span className={styles.orderAmount}>₱{order.amount}.00</span>
+                                    <span className={styles.orderStatus}><span>●</span> <b>{order.status}</b></span>
+                                    <button className={styles.trackBtn} onClick={() => navigate(`/orders?orderId=${order._id}`)}>Track Order</button>
+                                </div>
                             </div>
                         )
                     })}
