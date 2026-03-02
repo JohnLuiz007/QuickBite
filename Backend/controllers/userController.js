@@ -13,28 +13,31 @@ const loginUser = async (req, res) => {
     try {
         const user = await userModel.findOne({ email })
         if (!user) {
-            res.json({ success: false, message: "User does not exist!!" })
+            return res.json({ success: false, message: "User does not exist!!" })
         }
 
         const isMatch = await bcrypt.compare(password, user.password)
 
         if (!isMatch) {
-            res.json({ success: false, message: "Invalid Credentials, Please try again!!" })
+            return res.json({ success: false, message: "Invalid Credentials, Please try again!!" })
         }
 
         const token = createToken(user._id)
-        res.json({ success: true, token })
+        return res.json({ success: true, token })
 
 
     } catch (error) {
         console.log(error)
-        res.json({ success: false, message: "Error " })
+        return res.json({ success: false, message: "Error " })
     }
 }
 
 // Register User
 
 const createToken = (id) => {
+    if (!process.env.JWT_SECRET) {
+        throw new Error("Missing JWT_SECRET")
+    }
     return jwt.sign({ id }, process.env.JWT_SECRET)
 }
 
