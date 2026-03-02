@@ -6,6 +6,7 @@ import userRouter from "./routes/userRoute.js";
 import 'dotenv/config'
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
+import categoryRouter from "./routes/categoryRoute.js";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
@@ -53,6 +54,7 @@ connectDB();
 app.use("/api/food",foodRouter)
 app.use("/images", express.static(uploadsDir))
 app.use("/api/user",userRouter)
+app.use("/api/category", categoryRouter)
 app.use('/api/cart', cartRouter)
 app.use('/api/order', orderRouter)
 

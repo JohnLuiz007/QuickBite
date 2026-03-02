@@ -1,0 +1,87 @@
+.categories-page {
+  width: 100%;
+}
+
+.categories-create {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 12px 0 18px 0;
+}
+
+.categories-create input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
+}
+
+.categories-create button {
+  padding: 10px 14px;
+  border: none;
+  background: #4caf50;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.categories-table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.categories-row {
+  display: grid;
+  grid-template-columns: 1.2fr 2fr 0.6fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.categories-header {
+  background: #f5f5f5;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.categories-row p {
+  margin: 0;
+}
+
+.categories-rename {
+  display: flex;
+  gap: 8px;
+}
+
+.categories-rename input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
+}
+
+.categories-rename button {
+  padding: 8px 12px;
+  border: none;
+  background: #1e88e5;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.categories-delete {
+  padding: 8px 12px;
+  border: none;
+  background: #e53935;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.categories-delete:disabled,
+.categories-rename button:disabled,
+.categories-rename input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

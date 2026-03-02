@@ -7,12 +7,37 @@ import { toast } from 'react-toastify'
 const Add = ({URl}) => {
 
   const [image, setImage] = useState(null)
+  const [categories, setCategories] = useState([])
   const [data, setData] = useState({
     name: "",
     description: "",
     price: "",
-    category: "Salad"
+    categoryId: "",
+    category: "Uncategorized"
   })
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`${URl}/api/category/list`)
+      if (response.data.success) {
+        const list = response.data.data || []
+        setCategories(list)
+        const uncategorized = list.find((c) => String(c.name).trim().toLowerCase() === "uncategorized")
+        if (uncategorized && !data.categoryId) {
+          setData((prev) => ({ ...prev, categoryId: uncategorized._id, category: uncategorized.name }))
+        }
+        return
+      }
+      toast.error(response.data.message || "Error")
+    } catch (error) {
+      const message = error?.response?.data?.message || error?.message || "Error"
+      toast.error(message)
+    }
+  }
+
+  useEffect(() => {
+    fetchCategories()
+  }, [])
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target
@@ -22,22 +47,29 @@ const Add = ({URl}) => {
   const onSubmitHandler = async (event) => {
     event.preventDefault()
 
-    if (!image) {
-      toast.error("Please select an image")
-      return
-    }
-
     try {
       const formData = new FormData()
       formData.append("name", data.name)
       formData.append("description", data.description)
       formData.append("price", Number(data.price))
+      if (data.categoryId) {
+        formData.append("categoryId", data.categoryId)
+      }
       formData.append("category", data.category)
-      formData.append("image", image)
+      if (image) {
+        formData.append("image", image)
+      }
 
       const response = await axios.post(`${URl}/api/food/add`, formData)
       if (response.data.success) {
-        setData({ name: "", description: "", price: "", category: "Salad" })
+        const uncategorized = categories.find((c) => String(c.name).trim().toLowerCase() === "uncategorized")
+        setData({
+          name: "",
+          description: "",
+          price: "",
+          categoryId: uncategorized?._id || "",
+          category: uncategorized?.name || "Uncategorized"
+        })
         setImage(null)
         toast.success(response.data.message)
         return
@@ -59,7 +91,6 @@ const Add = ({URl}) => {
             onChange={(e) => setImage(e.target.files?.[0] || null)}
             type="file"
             accept="image/*"
-            required
           />
           {image ? <p className="add-file-name">{image.name}</p> : null}
           <img className="add-preview" src={image ? URL.createObjectURL(image) : assets.upload_area} alt="" />
@@ -78,15 +109,22 @@ const Add = ({URl}) => {
         <div className="add-category-price">
           <div className="add-category flex-col">
             <p>Product Category</p>
-            <select onChange={onChangeHandler} name='category' value={data.category}>
-              <option value="Salad">Salad</option>
-              <option value="Rolls">Rolls</option>
-              <option value="Dessert">Dessert</option>
-              <option value="Sandwich">Sandwich</option>
-              <option value="Cake">Cake</option>
-              <option value="Pure Veg">Pure Veg</option>
-              <option value="Pasta">Pasta</option>
-              <option value="Noodles">Noodles</option>
+            <select
+              onChange={(e) => {
+                const categoryId = e.target.value
+                const category = categories.find((c) => String(c._id) === String(categoryId))
+                setData((prev) => ({
+                  ...prev,
+                  categoryId,
+                  category: category?.name || prev.category
+                }))
+              }}
+              name='categoryId'
+              value={data.categoryId}
+            >
+              {categories.map((c) => (
+                <option key={c._id} value={c._id}>{c.name}</option>
+              ))}
             </select>
           </div>
 

@@ -9,6 +9,7 @@ const StoreContextProvider = (props) => {
     .replace(/\/api$/i, "")
   const [token , setToken] = useState("")
   const [food_list,setFoodList] = useState([])
+  const [menu_categories, setMenuCategories] = useState([])
 
   const addToCart =  async (itemId, quantity = 1) => {
     const qty = Number.isFinite(Number(quantity)) ? Number(quantity) : 1
@@ -44,8 +45,12 @@ const StoreContextProvider = (props) => {
   };
 
   const fetchFoodList = useCallback(async () => {
-    const response = await axios.get(URl + "/api/food/list");
-    setFoodList(response.data.data);
+    const response = await axios.get(URl + "/api/food/menu-grouped");
+    const payload = response.data?.data;
+    const categories = payload?.categories || [];
+    const items = payload?.items || [];
+    setMenuCategories(categories);
+    setFoodList(items);
   }, [URl]);
 
   const loadcartData = async (token) => {
@@ -71,6 +76,7 @@ const StoreContextProvider = (props) => {
 
   const contextValue = useMemo(() => ({
     food_list,
+    menu_categories,
     fetchFoodList,
     cartItem,
     setCartItems,
@@ -82,6 +88,7 @@ const StoreContextProvider = (props) => {
     setToken
   }), [
     food_list,
+    menu_categories,
     fetchFoodList,
     cartItem,
     URl,

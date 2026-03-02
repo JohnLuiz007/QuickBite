@@ -8,11 +8,96 @@
     color: #111;
 }
 
-.FoodDisplayList{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
-    margin-top: 30px;
-    gap: 30px;
-    row-gap: 50px;
+.Accordion{
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.AccordionItem{
+    border: 1px solid #e6e6e6;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.AccordionHeader{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #fafafa;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+.CategoryName{
+    font-weight: 700;
+    color: #111;
+}
+
+.ToggleIcon{
+    font-weight: 700;
+    color: #111;
+    width: 22px;
+    text-align: center;
+}
+
+.AccordionBody{
+    padding: 6px 12px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.MenuRow{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.MenuRowMain{
+    flex: 1;
+    min-width: 0;
+}
+
+.MenuRowTitle{
+    font-weight: 600;
+    color: #111;
+}
+
+.MenuRowDesc{
+    margin-top: 4px;
+    font-size: 13px;
+    color: #666;
+}
+
+.MenuRowRight{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.MenuRowPrice{
+    font-weight: 700;
+    color: #111;
+}
+
+.MenuRowAdd{
+    border: none;
+    background: #ff4c24;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
