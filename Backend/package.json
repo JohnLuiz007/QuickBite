@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "server": "nodemon server.js",
-    "seed:menu": "node scripts/seedMenu.js"
+    "seed:menu": "node scripts/seedMenu.js",
+    "seed:universitea": "node scripts/seedUniversiTeaMenu.js"
   },
   "author": "",
   "license": "ISC",
