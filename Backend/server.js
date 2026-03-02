@@ -26,7 +26,24 @@ if (!fs.existsSync(uploadsDir)) {
 
 //middleware
 app.use(express.json()) // For parsing json files coming to backend
-app.use(cors()) // To access backend from any frontend
+const allowedOrigins = process.env.CORS_ORIGINS
+    ? process.env.CORS_ORIGINS.split(",").map((s) => s.trim()).filter(Boolean)
+    : [];
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.length === 0) return callback(null, true);
+        if (allowedOrigins.includes(origin)) return callback(null, true);
+        return callback(new Error("Not allowed by CORS"));
+    },
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "token"],
+    optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions))
+app.options("*", cors(corsOptions))
 
 
 // DB Connection 
