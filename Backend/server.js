@@ -31,15 +31,26 @@ const allowedOrigins = process.env.CORS_ORIGINS
     ? process.env.CORS_ORIGINS.split(",").map((s) => s.trim()).filter(Boolean)
     : [];
 
+const isAllowedOrigin = (origin) => {
+    if (!origin) return true;
+    if (allowedOrigins.length === 0) return true;
+    if (allowedOrigins.includes(origin)) return true;
+    try {
+        const { hostname } = new URL(origin);
+        if (hostname && hostname.endsWith(".vercel.app")) return true;
+    } catch (_) {
+        // ignore URL parse errors
+    }
+    return false;
+}
+
 const corsOptions = {
     origin: (origin, callback) => {
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.length === 0) return callback(null, true);
-        if (allowedOrigins.includes(origin)) return callback(null, true);
-        return callback(new Error("Not allowed by CORS"));
+        if (isAllowedOrigin(origin)) return callback(null, true);
+        return callback(null, false);
     },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "token"],
+    allowedHeaders: ["Content-Type", "token", "Authorization"],
     optionsSuccessStatus: 204,
 };
 
