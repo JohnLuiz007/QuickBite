@@ -15,7 +15,7 @@ const RoleSelect = () => {
     <div className={styles.page}>
       <div className={styles.card}>
         <img src={assets.logo} alt="" className={styles.logo} />
-        <h1 className={styles.title}>Welcome to QuickBite</h1>
+        <h1 className={styles.title}>Welcome to UniversiTea Milk Tea Bar</h1>
         <p className={styles.subtitle}>Continue as:</p>
         <div className={styles.actions}>
           <button className={styles.primary} type="button" onClick={() => choose("student")}>

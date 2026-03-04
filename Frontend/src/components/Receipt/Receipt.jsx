@@ -20,7 +20,7 @@ const money = (n) => {
 
 const Receipt = forwardRef(function Receipt(
   {
-    brand = "QuickBite",
+    brand = "UniversiTea Milk Tea Bar",
     tagline = "ORDER RECEIPT",
     addressLines = [],
     host = "CASHIER",

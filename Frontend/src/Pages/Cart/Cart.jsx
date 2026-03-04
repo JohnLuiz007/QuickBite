@@ -243,7 +243,7 @@ const Cart = () => {
         <div className={modalStyles.receiptSpacer}>
           <Receipt
             ref={receiptPreviewRef}
-            brand="QuickBite"
+            brand="UniversiTea"
             tagline="ORDER RECEIPT"
             addressLines={[]}
             host={receiptPreviewData.host}
