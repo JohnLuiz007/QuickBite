@@ -19,7 +19,6 @@
 .logo{
   width: 200px;
   margin: 0 auto 10px;
-  filter: brightness(0) saturate(100%) invert(33%) sepia(92%) saturate(1287%) hue-rotate(95deg) brightness(92%) contrast(102%);
 }
 
 .title{
