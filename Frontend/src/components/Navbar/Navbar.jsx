@@ -36,6 +36,12 @@ const Navbar = () => {
               Add Food
             </NavLink>
             <NavLink
+              to="/staff/categories"
+              className={({ isActive }) => `${style.tab} ${isActive ? style.tabActive : ""}`}
+            >
+              Categories
+            </NavLink>
+            <NavLink
               to="/menu"
               className={({ isActive }) => `${style.tab} ${isActive ? style.tabActive : ""}`}
             >

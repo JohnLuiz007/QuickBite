@@ -9,6 +9,7 @@ import Cart from './Pages/Cart/Cart'
 import MyOrders from './Pages/Orders/MyOrders'
 import StaffOrders from './Pages/StaffOrders/StaffOrders'
 import StaffAddFood from './Pages/StaffAddFood/StaffAddFood'
+import StaffCategories from './Pages/StaffCategories/StaffCategories'
 import { StoreContext } from './context/StoreContext'
 
 const RequireAuth = ({ children }) => {
@@ -54,6 +55,7 @@ const App = () => {
           <Route path="/orders" element={<RequireAuth><RequireRole role="student"><MyOrders /></RequireRole></RequireAuth>} />
           <Route path="/staff/orders" element={<RequireAuth><RequireRole role="staff"><StaffOrders /></RequireRole></RequireAuth>} />
           <Route path="/staff/add-food" element={<RequireAuth><RequireRole role="staff"><StaffAddFood /></RequireRole></RequireAuth>} />
+          <Route path="/staff/categories" element={<RequireAuth><RequireRole role="staff"><StaffCategories /></RequireRole></RequireAuth>} />
           <Route
             path="*"
             element={

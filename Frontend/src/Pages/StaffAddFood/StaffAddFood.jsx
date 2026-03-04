@@ -8,11 +8,13 @@ const StaffAddFood = () => {
   const { URl, token, fetchFoodList, food_list } = useContext(StoreContext);
 
   const [image, setImage] = useState(null);
+  const [categories, setCategories] = useState([]);
   const [data, setData] = useState({
     name: "",
     description: "",
     price: "",
-    category: "Salad",
+    category: "",
+    categoryId: "",
   });
 
   const sortedFoods = useMemo(() => {
@@ -21,6 +23,27 @@ const StaffAddFood = () => {
 
   useEffect(() => {
     fetchFoodList?.()
+
+    const loadCategories = async () => {
+      const response = await axios.get(`${URl}/api/category/list`, { headers: { token } })
+      if (response.data?.success) {
+        const list = response.data.data || []
+        setCategories(list)
+        if (list.length > 0) {
+          setData((prev) => {
+            if (prev.categoryId) return prev
+            const preferred = list.find((c) => String(c?.name || "").toLowerCase() !== "uncategorized") || list[0]
+            return { ...prev, categoryId: preferred?._id || "", category: preferred?.name || "" }
+          })
+        }
+        return
+      }
+      throw new Error(response.data?.message || "Failed to load categories")
+    }
+
+    loadCategories().catch(() => {
+      setCategories([])
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -28,6 +51,16 @@ const StaffAddFood = () => {
     const { name, value } = event.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
+
+  const onCategoryChange = (event) => {
+    const value = event.target.value;
+    const selected = categories.find((c) => c.name === value);
+    setData((prev) => ({
+      ...prev,
+      category: value,
+      categoryId: selected?._id || "",
+    }));
+  }
 
   const onDeleteFood = async (id) => {
     const ok = window.confirm("Delete this food item?")
@@ -52,22 +85,23 @@ const StaffAddFood = () => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    if (!image) {
-      alert("Please choose an image");
-      return;
-    }
 
     const formData = new FormData();
     formData.append("name", data.name);
-    formData.append("description", data.description);
+    formData.append("description", String(data.description || "").trim() || "-");
     formData.append("price", Number(data.price));
     formData.append("category", data.category);
-    formData.append("image", image);
+    if (data.categoryId) {
+      formData.append("categoryId", data.categoryId);
+    }
+    if (image) {
+      formData.append("image", image);
+    }
 
     try {
       const response = await axios.post(`${URl}/api/food/add`, formData, { headers: { token } });
       if (response.data.success) {
-        setData({ name: "", description: "", price: "", category: "Salad" });
+        setData((prev) => ({ name: "", description: "", price: "", category: prev.category, categoryId: prev.categoryId }));
         setImage(null);
         await fetchFoodList?.();
         alert(response.data.message || "Food Added");
@@ -89,7 +123,7 @@ const StaffAddFood = () => {
       <form className={styles.form} onSubmit={onSubmitHandler}>
         <div className={styles.row}>
           <label className={styles.label}>Image</label>
-          <input className={styles.input} onChange={(e) => setImage(e.target.files?.[0] || null)} type="file" accept="image/*" required />
+          <input className={styles.input} onChange={(e) => setImage(e.target.files?.[0] || null)} type="file" accept="image/*" />
         </div>
 
         {image ? <img className={styles.preview} src={URL.createObjectURL(image)} alt="preview" /> : null}
@@ -101,23 +135,26 @@ const StaffAddFood = () => {
 
         <div className={styles.row}>
           <label className={styles.label}>Description</label>
-          <textarea className={styles.textarea} onChange={onChangeHandler} value={data.description} name="description" rows="5" required />
+          <textarea className={styles.textarea} onChange={onChangeHandler} value={data.description} name="description" rows="5" placeholder="Optional" />
         </div>
 
         <div className={styles.grid}>
           <div className={styles.row}>
             <label className={styles.label}>Category</label>
-            <select className={styles.input} onChange={onChangeHandler} value={data.category} name="category">
-              <option value="Salad">Salad</option>
-              <option value="Rolls">Rolls</option>
-              <option value="Dessert">Dessert</option>
-              <option value="Sandwich">Sandwich</option>
-              <option value="Cake">Cake</option>
-              <option value="Pure Veg">Pure Veg</option>
-              <option value="Pasta">Pasta</option>
-              <option value="Noodles">Noodles</option>
+            <select className={styles.input} onChange={onCategoryChange} value={data.category} name="category">
+              {categories.length > 0 ? (
+                categories.map((c) => (
+                  <option key={c._id} value={c.name}>{c.name}</option>
+                ))
+              ) : (
+                <>
+                  <option value="Uncategorized">Uncategorized</option>
+                </>
+              )}
             </select>
           </div>
+
+          <input type="hidden" name="categoryId" value={data.categoryId} readOnly />
 
           <div className={styles.row}>
             <label className={styles.label}>Price</label>
